@@ -19,8 +19,31 @@ class HerChatMessage extends StatelessWidget {
                 style: TextStyle(color: Colors.white)),
           ),
         ),
-        const SizedBox(height: 10)
+        const SizedBox(height: 5),
+        const _ImageBubble(),
+        const SizedBox(height: 10),
       ],
+    );
+  }
+}
+
+class _ImageBubble extends StatelessWidget {
+  const _ImageBubble({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Padding(
+      padding: const EdgeInsets.only(right: 100),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.network(
+            "https://yesno.wtf/assets/no/6-4bf0a784c173f70a0cab96efd9ff80c9.gif",
+            width: size.width * .7,
+            height: 150,
+            fit: BoxFit.cover),
+      ),
     );
   }
 }
