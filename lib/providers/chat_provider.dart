@@ -13,21 +13,13 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> sendMessage(String text) async {
     if (text.isEmpty) return;
+    if (text.endsWith('?')) {
+      herReply();
+    }
     final newMessage = Message(text: text, fromWho: FromWho.me);
     messagesList.add(newMessage);
-    if (text.endsWith('?')) {
-      await herReply();
-    }
-    notifyListeners();
     moveScrollToBottom();
-  }
-
-  Future<void> moveScrollToBottom() async {
-    await Future.delayed(const Duration(microseconds: 100));
-    chatScrollController.animateTo(
-        chatScrollController.position.maxScrollExtent,
-        duration: const Duration(microseconds: 300),
-        curve: Curves.easeOut);
+    notifyListeners();
   }
 
   Future<void> herReply() async {
@@ -35,5 +27,13 @@ class ChatProvider extends ChangeNotifier {
     messagesList.add(herMessage);
     notifyListeners();
     moveScrollToBottom();
+  }
+
+  Future<void> moveScrollToBottom() async {
+    await Future.delayed(const Duration(microseconds: 200));
+    chatScrollController.animateTo(
+        chatScrollController.position.maxScrollExtent,
+        duration: const Duration(microseconds: 300),
+        curve: Curves.easeOut);
   }
 }
